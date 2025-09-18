@@ -9,8 +9,8 @@ public class AuctionDBContext : DbContext
     {
     }
 
-    public DbSet<Auction> Auctions { get; set; }
-    public DbSet<Item> Items { get; set; }
+    public DbSet<Auction> Auctions { get; set; } // Auctions table
+    public DbSet<Item> Items { get; set; } // Items table
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
