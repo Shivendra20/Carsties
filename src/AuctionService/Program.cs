@@ -9,6 +9,9 @@ builder.Services.AddDbContext<AuctionDBContext>(opt =>
 });
 
 builder.Services.AddOpenApi();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 var app = builder.Build();
 app.UseAuthorization();
 app.MapControllers();
