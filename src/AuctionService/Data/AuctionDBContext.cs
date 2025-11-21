@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AuctionService.Data;
 
-public class AuctionDBContext : DbContext
+public class AuctionDBContext : Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityDbContext<Microsoft.AspNetCore.Identity.IdentityUser>
 {
     public AuctionDBContext(DbContextOptions<AuctionDBContext> options) : base(options)
     {
@@ -14,6 +14,8 @@ public class AuctionDBContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+
         modelBuilder.Entity<Auction>()
             .HasOne(a => a.Item)
             .WithOne(i => i.Auction)
