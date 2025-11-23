@@ -1,5 +1,6 @@
 using AuctionService.Data;
 using AuctionService.Dto;
+using AuctionService.Dtos;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -35,6 +36,28 @@ public class AuctionsController : ControllerBase
         if (auction == null) return NotFound();
         var dto = _mapper.Map<AuctionsDto>(auction);
         return dto;
+    }
+
+    [HttpPost("update/{id}")]
+    public async Task<ActionResult<bool>> UpdateAuction(Guid id, [FromBody] UpdateAuctionDto updateAuctionDto)
+    {
+        var auction = await _context.Auctions.Include(x => x.Item).FirstOrDefaultAsync(x => x.Id == id);
+        if (auction == null) return NotFound();
+        _mapper.Map(updateAuctionDto, auction);
+        var result = await _context.SaveChangesAsync() > 0;
+        if (!result) return BadRequest("Could not update DB");
+        return Ok(true);
+    }
+
+    [HttpPost("delete/{id}")]
+    public async Task<ActionResult<bool>> DeleteAuction(Guid id)
+    {
+        var auction = await _context.Auctions.Include(x => x.Item).FirstOrDefaultAsync(x => x.Id == id);
+        if (auction == null) return NotFound();
+        _context.Auctions.Remove(auction);
+        var result = await _context.SaveChangesAsync() > 0;
+        if (!result) return BadRequest("Could not update DB");
+        return Ok(true);
     }
 
 }

@@ -9,7 +9,6 @@ E:\2025_projects\carsties\src\AuctionService\bin\Debug\net9.0\AuctionService.pdb
 E:\2025_projects\carsties\src\AuctionService\bin\Debug\net9.0\AutoMapper.dll
 E:\2025_projects\carsties\src\AuctionService\bin\Debug\net9.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 E:\2025_projects\carsties\src\AuctionService\bin\Debug\net9.0\Humanizer.dll
-E:\2025_projects\carsties\src\AuctionService\bin\Debug\net9.0\Microsoft.AspNetCore.OpenApi.dll
 E:\2025_projects\carsties\src\AuctionService\bin\Debug\net9.0\Microsoft.Bcl.AsyncInterfaces.dll
 E:\2025_projects\carsties\src\AuctionService\bin\Debug\net9.0\Microsoft.Build.Locator.dll
 E:\2025_projects\carsties\src\AuctionService\bin\Debug\net9.0\Microsoft.CodeAnalysis.dll
@@ -130,3 +129,15 @@ E:\2025_projects\carsties\src\AuctionService\obj\Debug\net9.0\refint\AuctionServ
 E:\2025_projects\carsties\src\AuctionService\obj\Debug\net9.0\AuctionService.pdb
 E:\2025_projects\carsties\src\AuctionService\obj\Debug\net9.0\AuctionService.genruntimeconfig.cache
 E:\2025_projects\carsties\src\AuctionService\obj\Debug\net9.0\ref\AuctionService.dll
+E:\2025_projects\carsties\src\AuctionService\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+E:\2025_projects\carsties\src\AuctionService\bin\Debug\net9.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+E:\2025_projects\carsties\src\AuctionService\bin\Debug\net9.0\Microsoft.IdentityModel.Abstractions.dll
+E:\2025_projects\carsties\src\AuctionService\bin\Debug\net9.0\Microsoft.IdentityModel.JsonWebTokens.dll
+E:\2025_projects\carsties\src\AuctionService\bin\Debug\net9.0\Microsoft.IdentityModel.Logging.dll
+E:\2025_projects\carsties\src\AuctionService\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.dll
+E:\2025_projects\carsties\src\AuctionService\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+E:\2025_projects\carsties\src\AuctionService\bin\Debug\net9.0\Microsoft.IdentityModel.Tokens.dll
+E:\2025_projects\carsties\src\AuctionService\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
+E:\2025_projects\carsties\src\AuctionService\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+E:\2025_projects\carsties\src\AuctionService\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+E:\2025_projects\carsties\src\AuctionService\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll

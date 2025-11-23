@@ -1,5 +1,7 @@
 using AuctionService.Data;
+using AuctionService.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -8,18 +10,20 @@ builder.Services.AddDbContext<AuctionDBContext>(opt =>
     opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-builder.Services.AddOpenApi();
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<AuctionService.Services.TokenService>();
+builder.Services.AddScoped<AuctionService.Services.OtpService>();
 
-builder.Services.AddIdentityCore<Microsoft.AspNetCore.Identity.IdentityUser>(opt =>
+builder.Services.AddIdentityCore<ApplicationUser>(opt =>
 {
     opt.Password.RequireNonAlphanumeric = false;
 })
-.AddRoles<Microsoft.AspNetCore.Identity.IdentityRole>()
+.AddRoles<IdentityRole>()
+.AddRoleManager<RoleManager<IdentityRole>>()
 .AddEntityFrameworkStores<AuctionDBContext>()
-.AddSignInManager<Microsoft.AspNetCore.Identity.SignInManager<Microsoft.AspNetCore.Identity.IdentityUser>>();
+.AddSignInManager<SignInManager<ApplicationUser>>();
 
 builder.Services.AddAuthentication(Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(opt =>
@@ -43,6 +47,9 @@ builder.Services.AddCors(opt =>
 
 var app = builder.Build();
 app.UseCors("ClientPolicy");
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseAuthentication();
 app.UseAuthorization();
