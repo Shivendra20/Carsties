@@ -6,6 +6,8 @@ import { useNavigate, Link } from 'react-router-dom';
 const RegisterPage = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [role, setRole] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const { login } = useAuth();
@@ -15,7 +17,7 @@ const RegisterPage = () => {
         e.preventDefault();
         setError('');
         try {
-            const response = await axios.post('http://localhost:5058/api/auth/register', { username, email, password });
+            const response = await axios.post('http://localhost:5058/api/auth/register', { username, email, phoneNumber, role, password });
             login(response.data);
             navigate('/');
         } catch (err) {
@@ -45,6 +47,27 @@ const RegisterPage = () => {
                         onChange={(e) => setEmail(e.target.value)}
                         required
                     />
+                </div>
+                <div className="form-group">
+                    <label>Phone Number</label>
+                    <input
+                        type="tel"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label>Role</label>
+                    <select
+                        value={role}
+                        onChange={(e) => setRole(e.target.value)}
+                        required
+                    >
+                        <option value="Bidder">Bidder</option>
+                        <option value="Auctioneer">Auctioneer</option>
+                        <option value="Both">Both</option>
+                    </select>
                 </div>
                 <div className="form-group">
                     <label>Password</label>
