@@ -141,3 +141,5 @@ E:\2025_projects\carsties\src\AuctionService\bin\Debug\net9.0\System.IdentityMod
 E:\2025_projects\carsties\src\AuctionService\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
 E:\2025_projects\carsties\src\AuctionService\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 E:\2025_projects\carsties\src\AuctionService\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+E:\2025_projects\carsties\src\AuctionService\bin\Debug\net9.0\Pipelines.Sockets.Unofficial.dll
+E:\2025_projects\carsties\src\AuctionService\bin\Debug\net9.0\StackExchange.Redis.dll

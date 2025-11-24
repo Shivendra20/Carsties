@@ -16,6 +16,17 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<AuctionService.Services.TokenService>();
 builder.Services.AddScoped<AuctionService.Services.OtpService>();
 
+// Configure Redis
+builder.Services.AddSingleton<StackExchange.Redis.IConnectionMultiplexer>(sp =>
+{
+    var configuration = sp.GetRequiredService<IConfiguration>();
+    var redisConnectionString = configuration["Redis:ConnectionString"] ?? "localhost:6379";
+    return StackExchange.Redis.ConnectionMultiplexer.Connect(redisConnectionString);
+});
+
+// Register Cache Service
+builder.Services.AddScoped<AuctionService.Services.ICacheService, AuctionService.Services.RedisCacheService>();
+
 builder.Services.AddIdentityCore<ApplicationUser>(opt =>
 {
     opt.Password.RequireNonAlphanumeric = false;
