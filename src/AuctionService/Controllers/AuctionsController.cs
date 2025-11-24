@@ -1,14 +1,16 @@
 using AuctionService.Data;
 using AuctionService.Dto;
 using AuctionService.Dtos;
+using AuctionService.Entities;
 using AuctionService.Services;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace AuctionService.Controllers;
 
-[ApiController] //data validation
+[ApiController]
 [Route("api/Auctions")]
 public class AuctionsController : ControllerBase
 {
@@ -23,7 +25,7 @@ public class AuctionsController : ControllerBase
         _cacheService = cacheService;
     }
 
-    // get all auctions from this call 
+    // GET: api/auctions
     [HttpGet]
     public async Task<ActionResult<IEnumerable<AuctionsDto>>> GetAllAuctions()
     {
@@ -46,6 +48,53 @@ public class AuctionsController : ControllerBase
         return result;
     }
 
+    // POST: api/auctions
+    [Authorize]
+    [HttpPost]
+    public async Task<ActionResult<AuctionsDto>> CreateAuction([FromBody] CreateAuctionDto createAuctionDto)
+    {
+        // Get the username from the JWT token
+        var username = User.FindFirst(System.Security.Claims.ClaimTypes.Name)?.Value 
+                      ?? User.FindFirst("unique_name")?.Value;
+        
+        if (string.IsNullOrEmpty(username))
+        {
+            return Unauthorized("User not authenticated");
+        }
+
+        // Check if user has Auctioneer or Both role
+        var userRole = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value 
+                      ?? User.FindFirst("role")?.Value;
+        
+        if (userRole != "Auctioneer" && userRole != "Both")
+        {
+            return Forbid("Only auctioneers can create auctions");
+        }
+
+        // Create the auction
+        var auction = _mapper.Map<Auction>(createAuctionDto);
+        auction.Id = Guid.NewGuid();
+        auction.Seller = username;
+        auction.CreatedAt = DateTime.UtcNow;
+        auction.EndedAt = createAuctionDto.EndDate;
+        auction.Status = Status.Live;
+
+        _context.Auctions.Add(auction);
+        var result = await _context.SaveChangesAsync() > 0;
+
+        if (!result)
+        {
+            return BadRequest("Could not save auction");
+        }
+
+        // Invalidate cache
+        await _cacheService.RemoveAsync("auctions:all");
+
+        var dto = _mapper.Map<AuctionsDto>(auction);
+        return CreatedAtAction(nameof(GetAuctionById), new { id = auction.Id }, dto);
+    }
+
+    // GET: api/auctions/{id}
     [HttpGet("{id}")]
     public async Task<ActionResult<AuctionsDto>> GetAuctionById(Guid id)
     {
@@ -70,6 +119,7 @@ public class AuctionsController : ControllerBase
         return dto;
     }
 
+    // POST: api/auctions/update/{id}
     [HttpPost("update/{id}")]
     public async Task<ActionResult<bool>> UpdateAuction(Guid id, [FromBody] UpdateAuctionDto updateAuctionDto)
     {
@@ -88,6 +138,7 @@ public class AuctionsController : ControllerBase
         return Ok(true);
     }
 
+    // POST: api/auctions/delete/{id}
     [HttpPost("delete/{id}")]
     public async Task<ActionResult<bool>> DeleteAuction(Guid id)
     {

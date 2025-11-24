@@ -46,10 +46,8 @@ const AuctionList = () => {
             initial="hidden"
             animate="show"
         >
-            {auctions.map(auction => (
-                <motion.div key={auction.id} variants={item}>
-                    <AuctionCard auction={auction} />
-                </motion.div>
+            {auctions.map((auction, index) => (
+                <AuctionCard key={auction.id} auction={auction} index={index} />
             ))}
         </motion.div>
     );

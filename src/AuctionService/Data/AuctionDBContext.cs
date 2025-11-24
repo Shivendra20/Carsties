@@ -11,6 +11,7 @@ public class AuctionDBContext : Microsoft.AspNetCore.Identity.EntityFrameworkCor
 
     public DbSet<Auction> Auctions { get; set; } // Auctions table
     public DbSet<Item> Items { get; set; } // Items table
+    public DbSet<Bid> Bids { get; set; } // Bids table
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -24,5 +25,10 @@ public class AuctionDBContext : Microsoft.AspNetCore.Identity.EntityFrameworkCor
         modelBuilder.Entity<Item>()
             .Property(i => i.ImageUrl)
             .IsRequired(false);
+            
+        modelBuilder.Entity<Bid>()
+            .HasOne(b => b.Auction)
+            .WithMany()
+            .HasForeignKey(b => b.AuctionId);
     }
 }
