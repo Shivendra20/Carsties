@@ -7,7 +7,5 @@ public class Bid
     public string Bidder { get; set; } = string.Empty;
     public int Amount { get; set; }
     public DateTime BidTime { get; set; } = DateTime.UtcNow;
-    
-    // Navigation property
     public Auction Auction { get; set; } = null!;
 }

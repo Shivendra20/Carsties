@@ -14,9 +14,6 @@ public class CacheController : ControllerBase
         _cacheService = cacheService;
     }
 
-    /// <summary>
-    /// Check if a cache key exists
-    /// </summary>
     [HttpGet("exists/{key}")]
     public async Task<ActionResult<bool>> CheckCacheExists(string key)
     {
@@ -24,9 +21,6 @@ public class CacheController : ControllerBase
         return Ok(new { key, exists });
     }
 
-    /// <summary>
-    /// Remove a specific cache entry
-    /// </summary>
     [HttpDelete("{key}")]
     public async Task<ActionResult> RemoveCache(string key)
     {
@@ -34,9 +28,6 @@ public class CacheController : ControllerBase
         return Ok(new { message = $"Cache key '{key}' removed successfully" });
     }
 
-    /// <summary>
-    /// Remove all auction-related cache entries
-    /// </summary>
     [HttpDelete("clear/auctions")]
     public async Task<ActionResult> ClearAuctionCache()
     {
@@ -45,26 +36,25 @@ public class CacheController : ControllerBase
         return Ok(new { message = "All auction cache entries cleared" });
     }
 
-    /// <summary>
-    /// Get cache statistics (for monitoring)
-    /// </summary>
     [HttpGet("stats")]
     public ActionResult GetCacheStats()
     {
-        return Ok(new
-        {
-            message = "Cache is operational",
-            cacheKeys = new[]
+        return Ok(
+            new
             {
-                "auctions:all - List of all auctions",
-                "auction:{id} - Individual auction by ID"
-            },
-            tips = new[]
-            {
-                "Use GET /api/cache/exists/{key} to check if a key exists",
-                "Use DELETE /api/cache/{key} to remove a specific key",
-                "Use DELETE /api/cache/clear/auctions to clear all auction cache"
+                message = "Cache is operational",
+                cacheKeys = new[]
+                {
+                    "auctions:all - List of all auctions",
+                    "auction:{id} - Individual auction by ID",
+                },
+                tips = new[]
+                {
+                    "Use GET /api/cache/exists/{key} to check if a key exists",
+                    "Use DELETE /api/cache/{key} to remove a specific key",
+                    "Use DELETE /api/cache/clear/auctions to clear all auction cache",
+                },
             }
-        });
+        );
     }
 }

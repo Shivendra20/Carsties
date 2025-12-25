@@ -21,7 +21,8 @@ public class AuthController : ControllerBase
         UserManager<ApplicationUser> userManager,
         RoleManager<IdentityRole> roleManager,
         TokenService tokenService,
-        OtpService otpService)
+        OtpService otpService
+    )
     {
         _userManager = userManager;
         _roleManager = roleManager;
@@ -33,10 +34,12 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
     {
-        var user = await _userManager.FindByEmailAsync(loginDto.Username) 
+        var user =
+            await _userManager.FindByEmailAsync(loginDto.Username)
             ?? await _userManager.FindByNameAsync(loginDto.Username);
 
-        if (user == null) return Unauthorized("Invalid credentials");
+        if (user == null)
+            return Unauthorized("Invalid credentials");
 
         var result = await _userManager.CheckPasswordAsync(user, loginDto.Password);
 
@@ -52,7 +55,6 @@ public class AuthController : ControllerBase
     [HttpPost("register")]
     public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
     {
-        // Validate role
         if (!new[] { "Bidder", "Auctioneer", "Both" }.Contains(registerDto.Role))
         {
             return BadRequest("Invalid role. Must be 'Bidder', 'Auctioneer', or 'Both'");
@@ -77,14 +79,13 @@ public class AuthController : ControllerBase
         {
             UserName = registerDto.Username,
             Email = registerDto.Email,
-            PhoneNumber = registerDto.PhoneNumber
+            PhoneNumber = registerDto.PhoneNumber,
         };
 
         var result = await _userManager.CreateAsync(user, registerDto.Password);
 
         if (result.Succeeded)
         {
-            // Assign role based on registration
             if (registerDto.Role == "Both")
             {
                 await _userManager.AddToRoleAsync(user, "Bidder");
@@ -106,7 +107,7 @@ public class AuthController : ControllerBase
     public async Task<ActionResult> SendOtp(SendOtpDto sendOtpDto)
     {
         var user = await FindUserByEmailOrPhone(sendOtpDto.EmailOrPhone);
-        
+
         if (user == null)
         {
             return NotFound("User not found");
@@ -128,7 +129,7 @@ public class AuthController : ControllerBase
     public async Task<ActionResult<UserDto>> LoginWithOtp(VerifyOtpDto verifyOtpDto)
     {
         var user = await FindUserByEmailOrPhone(verifyOtpDto.EmailOrPhone);
-        
+
         if (user == null)
         {
             return Unauthorized("Invalid credentials");
@@ -149,13 +150,10 @@ public class AuthController : ControllerBase
     public async Task<ActionResult> ForgotPassword(SendOtpDto sendOtpDto)
     {
         var user = await FindUserByEmailOrPhone(sendOtpDto.EmailOrPhone);
-        
         if (user == null)
         {
-            // Don't reveal that user doesn't exist
             return Ok(new { message = "If the account exists, an OTP has been sent" });
         }
-
         var otp = _otpService.GenerateOtp();
         var result = await _otpService.SendOtpAsync(user, otp);
 
@@ -167,7 +165,7 @@ public class AuthController : ControllerBase
     public async Task<ActionResult> ResetPassword(ResetPasswordDto resetPasswordDto)
     {
         var user = await FindUserByEmailOrPhone(resetPasswordDto.EmailOrPhone);
-        
+
         if (user == null)
         {
             return BadRequest("Invalid request");
@@ -180,9 +178,12 @@ public class AuthController : ControllerBase
             return BadRequest("Invalid or expired OTP");
         }
 
-        // Reset password
         var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-        var result = await _userManager.ResetPasswordAsync(user, token, resetPasswordDto.NewPassword);
+        var result = await _userManager.ResetPasswordAsync(
+            user,
+            token,
+            resetPasswordDto.NewPassword
+        );
 
         if (result.Succeeded)
         {
@@ -196,8 +197,10 @@ public class AuthController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<UserDto>> GetCurrentUser()
     {
-        var user = await _userManager.FindByEmailAsync(User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value);
-        
+        var user = await _userManager.FindByEmailAsync(
+            User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value
+        );
+
         if (user == null)
         {
             return Unauthorized();
@@ -209,7 +212,7 @@ public class AuthController : ControllerBase
     private async Task<UserDto> CreateUserObject(ApplicationUser user)
     {
         var roles = await _userManager.GetRolesAsync(user);
-        
+
         return new UserDto
         {
             DisplayName = user.UserName,
@@ -217,13 +220,13 @@ public class AuthController : ControllerBase
             Username = user.UserName,
             Email = user.Email,
             PhoneNumber = user.PhoneNumber,
-            Roles = roles.ToList()
+            Roles = roles.ToList(),
         };
     }
 
     private async Task<ApplicationUser?> FindUserByEmailOrPhone(string emailOrPhone)
     {
-        return await _userManager.FindByEmailAsync(emailOrPhone) 
+        return await _userManager.FindByEmailAsync(emailOrPhone)
             ?? await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == emailOrPhone);
     }
 }

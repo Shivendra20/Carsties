@@ -16,14 +16,12 @@ public class OtpService
 
     public string GenerateOtp()
     {
-        // Generate a 6-digit OTP
         var random = new Random();
         return random.Next(100000, 999999).ToString();
     }
 
     public async Task<bool> SendOtpAsync(ApplicationUser user, string otp)
     {
-        // Store OTP in user record (expires in 10 minutes)
         user.Otp = otp;
         user.OtpExpiration = DateTime.UtcNow.AddMinutes(10);
         
@@ -31,12 +29,8 @@ public class OtpService
         
         if (result.Succeeded)
         {
-            // TODO: In production, send OTP via Email or SMS service
             _logger.LogInformation($"OTP generated for user {user.Email}: {otp}");
-            
-            // For development, log the OTP
-            Console.WriteLine($"=== OTP for {user.Email} or {user.PhoneNumber}: {otp} ===");
-            
+            Console.WriteLine($"=== OTP for {user.Email} or {user.PhoneNumber}: {otp} ===");       
             return true;
         }
         
@@ -52,7 +46,7 @@ public class OtpService
 
         if (user.OtpExpiration < DateTime.UtcNow)
         {
-            // OTP expired
+            
             return false;
         }
 
@@ -61,7 +55,7 @@ public class OtpService
             return false;
         }
 
-        // Clear OTP after successful verification
+        
         user.Otp = null;
         user.OtpExpiration = null;
         await _userManager.UpdateAsync(user);

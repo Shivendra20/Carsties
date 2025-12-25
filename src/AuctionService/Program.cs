@@ -15,8 +15,6 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<AuctionService.Services.TokenService>();
 builder.Services.AddScoped<AuctionService.Services.OtpService>();
-
-// Configure Redis
 builder.Services.AddSingleton<StackExchange.Redis.IConnectionMultiplexer>(sp =>
 {
     var configuration = sp.GetRequiredService<IConfiguration>();
@@ -24,9 +22,7 @@ builder.Services.AddSingleton<StackExchange.Redis.IConnectionMultiplexer>(sp =>
     return StackExchange.Redis.ConnectionMultiplexer.Connect(redisConnectionString);
 });
 
-// Register Cache Service
 builder.Services.AddScoped<AuctionService.Services.ICacheService, AuctionService.Services.RedisCacheService>();
-
 builder.Services.AddIdentityCore<ApplicationUser>(opt =>
 {
     opt.Password.RequireNonAlphanumeric = false;
@@ -52,7 +48,7 @@ builder.Services.AddCors(opt =>
 {
     opt.AddPolicy("ClientPolicy", policy =>
     {
-        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000", "http://localhost:5173");
+        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http:
     });
 });
 

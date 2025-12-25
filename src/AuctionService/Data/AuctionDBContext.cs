@@ -9,9 +9,9 @@ public class AuctionDBContext : Microsoft.AspNetCore.Identity.EntityFrameworkCor
     {
     }
 
-    public DbSet<Auction> Auctions { get; set; } // Auctions table
-    public DbSet<Item> Items { get; set; } // Items table
-    public DbSet<Bid> Bids { get; set; } // Bids table
+    public DbSet<Auction> Auctions { get; set; } 
+    public DbSet<Item> Items { get; set; } 
+    public DbSet<Bid> Bids { get; set; } 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -10,10 +10,7 @@ public class Item
     public int Year { get; set; }
     public string Color { get; set; } = string.Empty;
     public int Mileage { get; set; }
-    public string ImageUrl { get; set; } = string.Empty;
-
-
-    // nav properties 
+    public string ImageUrl { get; set; } = string.Empty;    
     public Auction Auction { get; set; } = null!;
     public Guid AuctionId { get; set; }
 }
