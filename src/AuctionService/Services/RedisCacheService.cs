@@ -1,5 +1,5 @@
-using StackExchange.Redis;
 using System.Text.Json;
+using StackExchange.Redis;
 
 namespace AuctionService.Services;
 
@@ -15,10 +15,13 @@ public class RedisCacheService : ICacheService
         _redis = redis;
         _db = redis.GetDatabase();
         _instanceName = configuration["Redis:InstanceName"] ?? "Carsties_";
-        _defaultExpirationMinutes = int.Parse(configuration["Redis:DefaultExpirationMinutes"] ?? "30");
+        _defaultExpirationMinutes = int.Parse(
+            configuration["Redis:DefaultExpirationMinutes"] ?? "30"
+        );
     }
 
-    public async Task<T?> GetAsync<T>(string key) where T : class
+    public async Task<T?> GetAsync<T>(string key)
+        where T : class
     {
         var prefixedKey = GetPrefixedKey(key);
         var value = await _db.StringGetAsync(prefixedKey);
@@ -29,7 +32,8 @@ public class RedisCacheService : ICacheService
         return JsonSerializer.Deserialize<T>(value!);
     }
 
-    public async Task SetAsync<T>(string key, T value, TimeSpan? expiration = null) where T : class
+    public async Task SetAsync<T>(string key, T value, TimeSpan? expiration = null)
+        where T : class
     {
         var prefixedKey = GetPrefixedKey(key);
         var serializedValue = JsonSerializer.Serialize(value);
@@ -48,12 +52,12 @@ public class RedisCacheService : ICacheService
     {
         var prefixedPattern = GetPrefixedKey(pattern);
         var endpoints = _redis.GetEndPoints();
-        
+
         foreach (var endpoint in endpoints)
         {
             var server = _redis.GetServer(endpoint);
             var keys = server.Keys(pattern: prefixedPattern);
-            
+
             foreach (var key in keys)
             {
                 await _db.KeyDeleteAsync(key);

@@ -8,26 +8,7 @@ public class DbInitializer
     public static void InitDb(WebApplication app)
     {
         using var scope = app.Services.CreateScope();
-        
-        
-        var roleManager = scope.ServiceProvider.GetRequiredService<Microsoft.AspNetCore.Identity.RoleManager<Microsoft.AspNetCore.Identity.IdentityRole>>();
-        InitializeRoles(roleManager).Wait();
-        
-        SeedData(scope.ServiceProvider.GetService<AuctionDBContext>());
-    }
-    
-    private static async Task InitializeRoles(Microsoft.AspNetCore.Identity.RoleManager<Microsoft.AspNetCore.Identity.IdentityRole> roleManager)
-    {
-        string[] roleNames = { "Bidder", "Auctioneer" };
-        
-        foreach (var roleName in roleNames)
-        {
-            var roleExist = await roleManager.RoleExistsAsync(roleName);
-            if (!roleExist)
-            {
-                await roleManager.CreateAsync(new Microsoft.AspNetCore.Identity.IdentityRole(roleName));
-            }
-        }
+        SeedData(scope.ServiceProvider.GetRequiredService<AuctionDBContext>());
     }
 
     public static void SeedData(AuctionDBContext context)
@@ -41,7 +22,6 @@ public class DbInitializer
 
         var auctions = new List<Entities.Auction>
         {
-            
             new Auction
             {
                 Id = Guid.Parse("afbee524-5972-4075-8800-7d1f9d7b0a0c"),
@@ -56,10 +36,10 @@ public class DbInitializer
                     Color = "White",
                     Mileage = 50000,
                     Year = 2020,
-                    ImageUrl = "https:
-                }
+                    ImageUrl =
+                        "https://cdn.pixabay.com/photo/2012/11/02/13/02/car-63930_960_720.jpg",
+                },
             },
-            
             new Auction
             {
                 Id = Guid.Parse("c8c3ec17-01bf-49db-82aa-1ef80b833a9f"),
@@ -74,10 +54,10 @@ public class DbInitializer
                     Color = "Black",
                     Mileage = 15035,
                     Year = 2018,
-                    ImageUrl = "https:
-                }
+                    ImageUrl =
+                        "https://cdn.pixabay.com/photo/2012/11/02/13/02/car-63930_960_720.jpg",
+                },
             },
-            
             new Auction
             {
                 Id = Guid.Parse("bbab4d5a-8565-48b1-9450-5ac2a5c4a654"),
@@ -91,10 +71,10 @@ public class DbInitializer
                     Color = "Black",
                     Mileage = 65125,
                     Year = 2023,
-                    ImageUrl = "https:
-                }
+                    ImageUrl =
+                        "https://cdn.pixabay.com/photo/2012/11/02/13/02/car-63930_960_720.jpg",
+                },
             },
-            
             new Auction
             {
                 Id = Guid.Parse("155225c1-4448-4066-9886-6786536e05ea"),
@@ -109,10 +89,10 @@ public class DbInitializer
                     Color = "Silver",
                     Mileage = 15001,
                     Year = 2020,
-                    ImageUrl = "https:
-                }
+                    ImageUrl =
+                        "https://cdn.pixabay.com/photo/2012/11/02/13/02/car-63930_960_720.jpg",
+                },
             },
-            
             new Auction
             {
                 Id = Guid.Parse("466e4744-4dc5-4987-aae0-b621acfc5e39"),
@@ -127,10 +107,10 @@ public class DbInitializer
                     Color = "White",
                     Mileage = 90000,
                     Year = 2017,
-                    ImageUrl = "https:
-                }
+                    ImageUrl =
+                        "https://cdn.pixabay.com/photo/2012/11/02/13/02/car-63930_960_720.jpg",
+                },
             },
-            
             new Auction
             {
                 Id = Guid.Parse("dc1e4071-d19d-459b-b848-b5c3cd3d151f"),
@@ -145,10 +125,10 @@ public class DbInitializer
                     Color = "Red",
                     Mileage = 50000,
                     Year = 2015,
-                    ImageUrl = "https:
-                }
+                    ImageUrl =
+                        "https://cdn.pixabay.com/photo/2012/11/02/13/02/car-63930_960_720.jpg",
+                },
             },
-            
             new Auction
             {
                 Id = Guid.Parse("47111973-d176-4feb-848d-0ea22641c31a"),
@@ -163,10 +143,10 @@ public class DbInitializer
                     Color = "Red",
                     Mileage = 5000,
                     Year = 2022,
-                    ImageUrl = "https:
-                }
+                    ImageUrl =
+                        "https://cdn.pixabay.com/photo/2012/11/02/13/02/car-63930_960_720.jpg",
+                },
             },
-            
             new Auction
             {
                 Id = Guid.Parse("6a5011a1-fe1f-47df-9a32-b5346b289391"),
@@ -180,10 +160,10 @@ public class DbInitializer
                     Color = "White",
                     Mileage = 10050,
                     Year = 2021,
-                    ImageUrl = "https:
-                }
+                    ImageUrl =
+                        "https://cdn.pixabay.com/photo/2012/11/02/13/02/car-63930_960_720.jpg",
+                },
             },
-            
             new Auction
             {
                 Id = Guid.Parse("40490065-dac7-46b6-acc4-df507e0d6570"),
@@ -198,10 +178,10 @@ public class DbInitializer
                     Color = "Black",
                     Mileage = 25400,
                     Year = 2020,
-                    ImageUrl = "https:
-                }
+                    ImageUrl =
+                        "https://cdn.pixabay.com/photo/2012/11/02/13/02/car-63930_960_720.jpg",
+                },
             },
-            
             new Auction
             {
                 Id = Guid.Parse("3659ac24-29dd-407a-81f5-ecfe6f924b9b"),
@@ -216,13 +196,13 @@ public class DbInitializer
                     Color = "Rust",
                     Mileage = 150150,
                     Year = 1938,
-                    ImageUrl = "https:
-                }
-            }
+                    ImageUrl =
+                        "https://cdn.pixabay.com/photo/2012/11/02/13/02/car-63930_960_720.jpg",
+                },
+            },
         };
 
         context.Auctions.AddRange(auctions);
-
         context.SaveChanges();
     }
 }

@@ -1,12 +1,12 @@
-using AuctionService.Dtos;
-using AuctionService.Entities;
-using AuctionService.Services;
+using AuthenticationService.Dtos;
+using AuthenticationService.Entities;
+using AuthenticationService.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace AuctionService.Controllers;
+namespace AuthenticationService.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

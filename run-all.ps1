@@ -7,7 +7,8 @@ Write-Host "========================================" -ForegroundColor Cyan
 Write-Host ""
 
 # Define paths
-$BackendPath = "src\AuctionService"
+$AuctionServicePath = "src\AuctionService"
+$AuthServicePath = "src\AuthenticationService"
 $FrontendPath = "frontend"
 
 # Function to check if a port is in use
@@ -48,7 +49,7 @@ function Wait-ForService {
 }
 
 # Step 1: Start Docker Compose
-Write-Host "[1/5] Starting Docker Services..." -ForegroundColor Yellow
+Write-Host "[1/6] Starting Docker Services..." -ForegroundColor Yellow
 
 # Check if Docker is running
 try {
@@ -73,7 +74,7 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 # Step 2: Wait for Docker services to be ready
-Write-Host "[2/5] Waiting for Docker Services..." -ForegroundColor Yellow
+Write-Host "[2/6] Waiting for Docker Services..." -ForegroundColor Yellow
 
 if (-not (Wait-ForService -ServiceName "PostgreSQL" -Port 5432)) {
     Write-Host "PostgreSQL did not start properly. Check Docker logs." -ForegroundColor Red
@@ -88,31 +89,36 @@ if (-not (Wait-ForService -ServiceName "Redis" -Port 6379)) {
 Write-Host "All Docker services are ready!" -ForegroundColor Green
 Start-Sleep -Seconds 2
 
-# Step 3: Build and Run Backend
-Write-Host "[3/5] Building .NET Backend..." -ForegroundColor Yellow
-Push-Location $BackendPath
-
-# Build the backend
+# Step 3: Build and Run Authentication Service
+Write-Host "[3/6] Building Authentication Service..." -ForegroundColor Yellow
+Push-Location $AuthServicePath
 dotnet build
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "Backend build failed!" -ForegroundColor Red
+    Write-Host "Authentication Service build failed!" -ForegroundColor Red
     Pop-Location
     exit 1
 }
 
-Write-Host "[4/5] Starting .NET Backend..." -ForegroundColor Yellow
-
-# Start backend in a new window
-Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd '$PWD'; Write-Host 'Starting Backend Server...' -ForegroundColor Green; dotnet run"
-
+Write-Host "[4/6] Starting Authentication Service..." -ForegroundColor Yellow
+Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd '$PWD'; Write-Host 'Starting Authentication Service...' -ForegroundColor Green; dotnet run"
 Pop-Location
 
-# Wait a bit for backend to start
-Write-Host "Waiting for backend to initialize..." -ForegroundColor Cyan
-Start-Sleep -Seconds 5
+# Step 4: Build and Run Auction Service
+Write-Host "[5/6] Building Auction Service..." -ForegroundColor Yellow
+Push-Location $AuctionServicePath
+dotnet build
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "Auction Service build failed!" -ForegroundColor Red
+    Pop-Location
+    exit 1
+}
 
-# Step 4: Build and Run Frontend
-Write-Host "[5/5] Starting Frontend..." -ForegroundColor Yellow
+Write-Host "[6/6] Starting Auction Service..." -ForegroundColor Yellow
+Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd '$PWD'; Write-Host 'Starting Auction Service...' -ForegroundColor Green; dotnet run"
+Pop-Location
+
+# Step 5: Start Frontend
+Write-Host "Starting Frontend..." -ForegroundColor Yellow
 Push-Location $FrontendPath
 
 # Install dependencies if needed
@@ -137,11 +143,12 @@ Write-Host "  All services are starting!" -ForegroundColor Green
 Write-Host "========================================" -ForegroundColor Green
 Write-Host ""
 Write-Host "Docker: PostgreSQL (5432) + Redis (6379)" -ForegroundColor Cyan
-Write-Host "Backend: Check the .NET window" -ForegroundColor Cyan
+Write-Host "Auth Service: Check the .NET window" -ForegroundColor Cyan
+Write-Host "Auction Service: Check the .NET window" -ForegroundColor Cyan
 Write-Host "Frontend: Check the npm window" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "To stop all services:" -ForegroundColor Yellow
-Write-Host "  1. Close backend and frontend windows (or Ctrl+C)" -ForegroundColor Gray
+Write-Host "  1. Close service windows (or Ctrl+C)" -ForegroundColor Gray
 Write-Host "  2. Run: docker-compose down" -ForegroundColor Gray
 Write-Host ""
 Write-Host "Press any key to exit this launcher..." -ForegroundColor Gray

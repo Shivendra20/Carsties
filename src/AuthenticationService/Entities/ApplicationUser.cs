@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace AuctionService.Entities;
+namespace AuthenticationService.Entities;
 
 public class ApplicationUser : IdentityUser
 {

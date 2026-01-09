@@ -1,0 +1,45 @@
+﻿Using launch settings from E:\2025_projects\carsties\src\AuctionService\Properties\launchSettings.json...
+Building...
+fail: Microsoft.EntityFrameworkCore.Database.Command[20102]
+      Failed executing DbCommand (22ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT "MigrationId", "ProductVersion"
+      FROM "__EFMigrationsHistory"
+      ORDER BY "MigrationId";
+dotnet : Unhandled exception. System.InvalidOperationException: An 
+error was generated for warning 'Microsoft.EntityFrameworkCore.Migrat
+ions.PendingModelChangesWarning': The model for context 
+'AuctionDBContext' has pending changes. Add a new migration before 
+updating the database. See 
+https://aka.ms/efcore-docs-pending-changes. This exception can be 
+suppressed or logged by passing event ID 
+'RelationalEventId.PendingModelChangesWarning' to the 
+'ConfigureWarnings' method in 'DbContext.OnConfiguring' or 
+'AddDbContext'.
+At line:1 char:1
++ dotnet run > log.txt 2>&1
++ ~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Unhandled excep...'AddD 
+   bContext'.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+   at Microsoft.EntityFrameworkCore.Diagnostics.EventDefinition`1.Log
+[TLoggerCategory](IDiagnosticsLogger`1 logger, TParam arg)
+   at Microsoft.EntityFrameworkCore.Diagnostics.RelationalLoggerExten
+sions.PendingModelChangesWarning(IDiagnosticsLogger`1 diagnostics, 
+Type contextType)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.Vali
+dateMigrations(Boolean useTransaction, String targetMigration)
+   at Microsoft.EntityFrameworkCore.Migrations.Internal.Migrator.Migr
+ate(String targetMigration)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Migrations.Internal.Npgsq
+lMigrator.Migrate(String targetMigration)
+   at Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtension
+s.Migrate(DatabaseFacade databaseFacade)
+   at AuctionService.Data.DbInitializer.SeedData(AuctionDBContext 
+context) in E:\2025_projects\carsties\src\AuctionService\Data\DbIniti
+alizer.cs:line 17
+   at AuctionService.Data.DbInitializer.InitDb(WebApplication app) 
+in E:\2025_projects\carsties\src\AuctionService\Data\DbInitializer.cs
+:line 12
+   at Program.<Main>$(String[] args) in 
+E:\2025_projects\carsties\src\AuctionService\Program.cs:line 57

@@ -1,5 +1,4 @@
 using AuctionService.Data;
-using AuctionService.Dto;
 using AuctionService.Dtos;
 using AuctionService.Entities;
 using AuctionService.Services;

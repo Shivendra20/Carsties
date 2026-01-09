@@ -130,7 +130,6 @@ E:\2025_projects\carsties\src\AuctionService\obj\Debug\net9.0\AuctionService.pdb
 E:\2025_projects\carsties\src\AuctionService\obj\Debug\net9.0\AuctionService.genruntimeconfig.cache
 E:\2025_projects\carsties\src\AuctionService\obj\Debug\net9.0\ref\AuctionService.dll
 E:\2025_projects\carsties\src\AuctionService\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
-E:\2025_projects\carsties\src\AuctionService\bin\Debug\net9.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 E:\2025_projects\carsties\src\AuctionService\bin\Debug\net9.0\Microsoft.IdentityModel.Abstractions.dll
 E:\2025_projects\carsties\src\AuctionService\bin\Debug\net9.0\Microsoft.IdentityModel.JsonWebTokens.dll
 E:\2025_projects\carsties\src\AuctionService\bin\Debug\net9.0\Microsoft.IdentityModel.Logging.dll

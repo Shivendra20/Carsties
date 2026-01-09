@@ -1,0 +1,31 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+E:\2025_projects\carsties\src\AuctionService\Data\DbInitializer.cs(59,32): error CS1010: Newline in constant [E:\2025_projects\carsties\src\AuctionService\AuctionService.csproj]
+E:\2025_projects\carsties\src\AuctionService\Data\DbInitializer.cs(77,32): error CS1010: Newline in constant [E:\2025_projects\carsties\src\AuctionService\AuctionService.csproj]
+E:\2025_projects\carsties\src\AuctionService\Data\DbInitializer.cs(94,32): error CS1010: Newline in constant [E:\2025_projects\carsties\src\AuctionService\AuctionService.csproj]
+E:\2025_projects\carsties\src\AuctionService\Data\DbInitializer.cs(112,32): error CS1010: Newline in constant [E:\2025_projects\carsties\src\AuctionService\AuctionService.csproj]
+E:\2025_projects\carsties\src\AuctionService\Data\DbInitializer.cs(130,32): error CS1010: Newline in constant [E:\2025_projects\carsties\src\AuctionService\AuctionService.csproj]
+E:\2025_projects\carsties\src\AuctionService\Data\DbInitializer.cs(148,32): error CS1010: Newline in constant [E:\2025_projects\carsties\src\AuctionService\AuctionService.csproj]
+E:\2025_projects\carsties\src\AuctionService\Data\DbInitializer.cs(166,32): error CS1010: Newline in constant [E:\2025_projects\carsties\src\AuctionService\AuctionService.csproj]
+E:\2025_projects\carsties\src\AuctionService\Data\DbInitializer.cs(183,32): error CS1010: Newline in constant [E:\2025_projects\carsties\src\AuctionService\AuctionService.csproj]
+E:\2025_projects\carsties\src\AuctionService\Data\DbInitializer.cs(201,32): error CS1010: Newline in constant [E:\2025_projects\carsties\src\AuctionService\AuctionService.csproj]
+E:\2025_projects\carsties\src\AuctionService\Data\DbInitializer.cs(219,32): error CS1010: Newline in constant [E:\2025_projects\carsties\src\AuctionService\AuctionService.csproj]
+
+Build FAILED.
+
+E:\2025_projects\carsties\src\AuctionService\Data\DbInitializer.cs(59,32): error CS1010: Newline in constant [E:\2025_projects\carsties\src\AuctionService\AuctionService.csproj]
+E:\2025_projects\carsties\src\AuctionService\Data\DbInitializer.cs(77,32): error CS1010: Newline in constant [E:\2025_projects\carsties\src\AuctionService\AuctionService.csproj]
+E:\2025_projects\carsties\src\AuctionService\Data\DbInitializer.cs(94,32): error CS1010: Newline in constant [E:\2025_projects\carsties\src\AuctionService\AuctionService.csproj]
+E:\2025_projects\carsties\src\AuctionService\Data\DbInitializer.cs(112,32): error CS1010: Newline in constant [E:\2025_projects\carsties\src\AuctionService\AuctionService.csproj]
+E:\2025_projects\carsties\src\AuctionService\Data\DbInitializer.cs(130,32): error CS1010: Newline in constant [E:\2025_projects\carsties\src\AuctionService\AuctionService.csproj]
+E:\2025_projects\carsties\src\AuctionService\Data\DbInitializer.cs(148,32): error CS1010: Newline in constant [E:\2025_projects\carsties\src\AuctionService\AuctionService.csproj]
+E:\2025_projects\carsties\src\AuctionService\Data\DbInitializer.cs(166,32): error CS1010: Newline in constant [E:\2025_projects\carsties\src\AuctionService\AuctionService.csproj]
+E:\2025_projects\carsties\src\AuctionService\Data\DbInitializer.cs(183,32): error CS1010: Newline in constant [E:\2025_projects\carsties\src\AuctionService\AuctionService.csproj]
+E:\2025_projects\carsties\src\AuctionService\Data\DbInitializer.cs(201,32): error CS1010: Newline in constant [E:\2025_projects\carsties\src\AuctionService\AuctionService.csproj]
+E:\2025_projects\carsties\src\AuctionService\Data\DbInitializer.cs(219,32): error CS1010: Newline in constant [E:\2025_projects\carsties\src\AuctionService\AuctionService.csproj]
+    0 Warning(s)
+    10 Error(s)
+
+Time Elapsed 00:00:03.95
+
+Workload updates are available. Run `dotnet workload list` for more information.

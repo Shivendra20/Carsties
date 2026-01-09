@@ -1,11 +1,11 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using AuctionService.Entities;
+using AuthenticationService.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
-namespace AuctionService.Services;
+namespace AuthenticationService.Services;
 
 public class TokenService
 {
@@ -16,7 +16,10 @@ public class TokenService
         _config = config;
     }
 
-    public async Task<string> CreateToken(ApplicationUser user, UserManager<ApplicationUser> userManager)
+    public async Task<string> CreateToken(
+        ApplicationUser user,
+        UserManager<ApplicationUser> userManager
+    )
     {
         var claims = new List<Claim>
         {
@@ -32,14 +35,26 @@ public class TokenService
             claims.Add(new Claim(ClaimTypes.Role, role));
         }
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["TokenKey"] ?? throw new InvalidOperationException("TokenKey is not configured")));
+        var key = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(
+                _config["TokenKey"]
+                    ?? throw new InvalidOperationException("TokenKey is not configured")
+            )
+        );
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(claims),
             Expires = DateTime.UtcNow.AddDays(7),
-            SigningCredentials = creds
+            SigningCredentials = creds,
+        };
+
+        var tokenDescriptor2 = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(claims),
+            Expires = DateTime.UtcNow.AddDays(7),
+            SigningCredentials = creds,
         };
 
         var tokenHandler = new JwtSecurityTokenHandler();
